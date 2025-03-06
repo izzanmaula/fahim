@@ -32,16 +32,5 @@ Kami mengundang para pengembang (developer) untuk berkolaborasi dalam pengembang
 
 ## Kontak
 
-Jika Anda memiliki pertanyaan atau saran, silakan hubungi kami melalui [email/media sosial Anda].
-
-## Lisensi
-
-Aplikasi Fahim dilisensikan di bawah [Lisensi Anda].
-
-## Catatan Tambahan
-
-* Anda dapat menambahkan tangkapan layar (screenshot) aplikasi untuk memberikan gambaran visual kepada calon kontributor.
-* Jelaskan secara lebih detail fitur-fitur yang sudah atau akan dikembangkan.
-* Tambahkan petunjuk instalasi aplikasi, jika sudah ada versi percobaan yang ingin dibagikan.
-
-Semoga `README.md` ini bermanfaat!
+Jika Anda memiliki pertanyaan atau saran, silakan hubungi kami melalui izzanmaula0@gmail.com atau akun instagram saya @fadhil.manfa.
+Terima kasih.
