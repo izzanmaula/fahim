@@ -1,263 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Islamic Prayer Times App</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <style>
-        body {
-            background-color: #00a884;
-            font-family: 'Arial', sans-serif;
-            color: white;
-        }
-        
-        .top-container {
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .prayer-time {
-            font-size: 48px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .date-info {
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        
-        .time-remaining {
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        
-        .prayer-times-container {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-        }
-        
-        .prayer-item {
-            text-align: center;
-            font-size: 12px;
-        }
-        
-        .prayer-item .time {
-            font-weight: bold;
-            margin-top: 5px;
-        }
-        
-        .features-section {
-            background-color: white;
-            border-radius: 20px 20px 0 0;
-            padding: 20px;
-            color: #333;
-        }
-        
-        .features-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .features-grid {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .feature-item {
-            text-align: center;
-            width: 60px;
-        }
-        
-        .feature-icon {
-            background-color: #f0f0f0;
-            border-radius: 12px;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 5px;
-        }
-        
-        .live-section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .live-card {
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-        
-        .live-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        
-        .viewers-badge {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        
-        .duration-badge {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid #eee;
-        }
-        
-        .nav-item {
-            text-align: center;
-            color: #777;
-        }
-        
-        .nav-item.active {
-            color: #00a884;
-        }
+      body {
+        color: black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+
+      .top-container {
+        padding: 20px;
+        text-align: center;
+        background-color: #00a884; /* Green color, matching the active nav item color */
+        color: white; /* Adding white text color for better contrast */
+        background-image: url('img/bg.png');
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      .prayer-time {
+        font-size: 4rem;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .date-info {
+        font-size: 14px;
+      }
+
+      .time-remaining {
+        font-size: 14px;
+        margin-top: 10px;
+        font-weight: bold;
+
+      }
+
+      .prayer-times-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 3rem;
+      }
+
+      .prayer-item {
+        text-align: center;
+        font-size: 12px;
+      }
+
+      .prayer-item .time {
+        font-weight: bold;
+        margin-top: 5px;
+      }
+
+      .features-section {
+        background-color: white;
+        border-radius: 20px 20px 0 0;
+        padding: 20px;
+        color: #333;
+      }
+
+      .features-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .features-grid {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .feature-item {
+        text-align: center;
+        width: 60px;
+      }
+
+      .feature-icon {
+        background-color: #f0f0f0;
+        border-radius: 12px;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 5px;
+      }
+
+      .live-section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .live-card {
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+
+      .live-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: red;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+
+      .viewers-badge {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+
+      .duration-badge {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+
+      .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        border-top: 1px solid #eee;
+      }
+
+      .nav-item {
+        text-align: center;
+        color: #777;
+      }
+
+      .nav-item.active {
+        color: #00a884;
+      }
     </style>
-</head>
-<body>
+
+    <!-- font offline -->
+    <style>
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/fonts/static/Inter_18pt-Medium.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("assets/fonts/static/Inter_18pt-Bold.ttf") format("truetype");
+        font-weight: bold;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      h1 {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
     <div class="container p-0">
-        <div class="top-container">
-            <div class="date-info">9 Ramadhan 1444 H<br>Jakarta, Indonesia</div>
-            <div class="prayer-time">04:41</div>
-            <div class="time-remaining">Fajr: 3 hour 9 min left</div>
-            
-            <div class="prayer-times-container">
-                <div class="prayer-item">
-                    <div>Fajr</div>
-                    <div class="time">04:41</div>
-                </div>
-                <div class="prayer-item">
-                    <div>Dzuhr</div>
-                    <div class="time">12:00</div>
-                </div>
-                <div class="prayer-item">
-                    <div>Asr</div>
-                    <div class="time">15:14</div>
-                </div>
-                <div class="prayer-item">
-                    <div>Maghrib</div>
-                    <div class="time">18:02</div>
-                </div>
-                <div class="prayer-item">
-                    <div>Isha</div>
-                    <div class="time">19:11</div>
-                </div>
-            </div>
+      <div class="top-container">
+        <div class="border rounded-pill d-flex justify-content-center align-items-center" style="display:inline; width: 200px; margin: 0 auto;">
+            <img src="img/lokasi.png" alt="" srcset="" style="width:12px; height:12px;">
+            <p class="p-1 m-0" style="font-size: 12px;">Jakarta, Indonesia</p>
         </div>
         
-        <div class="features-section">
-            <div class="features-title">
-                <h6 class="mb-0">All Features</h6>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="bi bi-book"></i>
-                    </div>
-                    <div>Quran</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="bi bi-volume-up"></i>
-                    </div>
-                    <div>Adzan</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="bi bi-chat-dots"></i>
-                    </div>
-                    <div>Qibla</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="bi bi-heart"></i>
-                    </div>
-                    <div>Donation</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="bi bi-grid"></i>
-                    </div>
-                    <div>All</div>
-                </div>
-            </div>
-            
-            <div class="live-section-title">
-                <h6 class="mb-0">Ngaji Online</h6>
-                <small class="text-primary">See All</small>
-            </div>
-            
-            <div class="live-content">
-                <div class="live-card">
-                    <img src="placeholder-quran-session.jpg" alt="Quran Session" class="img-fluid" style="width: 100%; height: 180px; object-fit: cover; background-color: #f0f0f0;">
-                    <div class="live-badge">LIVE</div>
-                    <div class="viewers-badge">3.5K viewers</div>
-                    <div class="duration-badge">1:05</div>
-                </div>
-            </div>
+        <div class="prayer-time">04:41</div>
+        <div class="date-info ">9 Ramadhan 1444 H</div>
+        <div class="date-info">Saturday, 17 April 2022</div>  
+        <div class="time-remaining">Fajr: 3 hour 9 min left</div>
+
+        <div class="prayer-times-container">
+          <div class="prayer-item">
+            <div>Fajr</div>
+            <div class="time">04:41</div>
+          </div>
+          <div class="prayer-item">
+            <div>Dzuhr</div>
+            <div class="time">12:00</div>
+          </div>
+          <div class="prayer-item">
+            <div>Asr</div>
+            <div class="time">15:14</div>
+          </div>
+          <div class="prayer-item">
+            <div>Maghrib</div>
+            <div class="time">18:02</div>
+          </div>
+          <div class="prayer-item">
+            <div>Isha</div>
+            <div class="time">19:11</div>
+          </div>
         </div>
+      </div>
+
+      <div class="features-section">
+        <div class="features-title">
+          <h6 class="mb-0">All Features</h6>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <img src="img/quran.png" alt="" srcset="" width="30px">
+            </div>
+            <div>Quran</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+                <img src="img/doa.png" alt="" srcset="" width="30px">
+            </div>
+            <div>Doa</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+                <img src="img/kiblat.png " alt="" srcset="" width="30px">
+            </div>
+            <div>Qiblat</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="bi bi-heart"></i>
+            </div>
+            <div>Donation</div>
+          </div>
+        </div>
+
+        <div class="live-section-title">
+          <h6 class="mb-0">Ngaji Online</h6>
+          <small class="text-primary">See All</small>
+        </div>
+
+        <div class="live-content">
+          <div class="live-card">
+            <img
+              src="placeholder-quran-session.jpg"
+              alt="Quran Session"
+              class="img-fluid"
+              style="
+                width: 100%;
+                height: 180px;
+                object-fit: cover;
+                background-color: #f0f0f0;
+              "
+            />
+            <div class="live-badge">LIVE</div>
+            <div class="viewers-badge">3.5K viewers</div>
+            <div class="duration-badge">1:05</div>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <div class="bottom-nav">
-        <div class="nav-item active">
-            <i class="bi bi-house-door-fill"></i>
-            <div>Home</div>
-        </div>
-        <div class="nav-item">
-            <i class="bi bi-search"></i>
-            <div>Search</div>
-        </div>
-        <div class="nav-item">
-            <i class="bi bi-bell"></i>
-            <div>Notifications</div>
-        </div>
-        <div class="nav-item">
-            <i class="bi bi-person"></i>
-            <div>Profile</div>
-        </div>
+      <div class="nav-item active">
+        <i class="bi bi-house-door-fill"></i>
+        <div>Home</div>
+      </div>
+      <div class="nav-item">
+        <i class="bi bi-search"></i>
+        <div>Search</div>
+      </div>
+      <div class="nav-item">
+        <i class="bi bi-bell"></i>
+        <div>Notifications</div>
+      </div>
+      <div class="nav-item">
+        <i class="bi bi-person"></i>
+        <div>Profile</div>
+      </div>
     </div>
-    
+
     <script src="js/bootstrap.bundle.min.js"></script>
-</body>
+  </body>
 </html>
