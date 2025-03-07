@@ -1,50 +1,263 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, please refer to the docs:
-            https://cordova.apache.org/docs/en/latest/
-        Some notes:
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <meta name="color-scheme" content="light dark">
-        <link rel="stylesheet" href="css/index.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Prayer Times App</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #00a884;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+        
+        .top-container {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .prayer-time {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .date-info {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .time-remaining {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .prayer-times-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .prayer-item {
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .prayer-item .time {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .features-section {
+            background-color: white;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .features-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .features-grid {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            width: 60px;
+        }
+        
+        .feature-icon {
+            background-color: #f0f0f0;
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 5px;
+        }
+        
+        .live-section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .live-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        
+        .viewers-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        
+        .duration-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-item {
+            text-align: center;
+            color: #777;
+        }
+        
+        .nav-item.active {
+            color: #00a884;
+        }
+    </style>
+</head>
+<body>
+    <div class="container p-0">
+        <div class="top-container">
+            <div class="date-info">9 Ramadhan 1444 H<br>Jakarta, Indonesia</div>
+            <div class="prayer-time">04:41</div>
+            <div class="time-remaining">Fajr: 3 hour 9 min left</div>
+            
+            <div class="prayer-times-container">
+                <div class="prayer-item">
+                    <div>Fajr</div>
+                    <div class="time">04:41</div>
+                </div>
+                <div class="prayer-item">
+                    <div>Dzuhr</div>
+                    <div class="time">12:00</div>
+                </div>
+                <div class="prayer-item">
+                    <div>Asr</div>
+                    <div class="time">15:14</div>
+                </div>
+                <div class="prayer-item">
+                    <div>Maghrib</div>
+                    <div class="time">18:02</div>
+                </div>
+                <div class="prayer-item">
+                    <div>Isha</div>
+                    <div class="time">19:11</div>
+                </div>
             </div>
         </div>
-        <script src="cordova.js"></script>
-        <script src="js/index.js"></script>
-    </body>
+        
+        <div class="features-section">
+            <div class="features-title">
+                <h6 class="mb-0">All Features</h6>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <div>Quran</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-volume-up"></i>
+                    </div>
+                    <div>Adzan</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                    <div>Qibla</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-heart"></i>
+                    </div>
+                    <div>Donation</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="bi bi-grid"></i>
+                    </div>
+                    <div>All</div>
+                </div>
+            </div>
+            
+            <div class="live-section-title">
+                <h6 class="mb-0">Ngaji Online</h6>
+                <small class="text-primary">See All</small>
+            </div>
+            
+            <div class="live-content">
+                <div class="live-card">
+                    <img src="placeholder-quran-session.jpg" alt="Quran Session" class="img-fluid" style="width: 100%; height: 180px; object-fit: cover; background-color: #f0f0f0;">
+                    <div class="live-badge">LIVE</div>
+                    <div class="viewers-badge">3.5K viewers</div>
+                    <div class="duration-badge">1:05</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <i class="bi bi-house-door-fill"></i>
+            <div>Home</div>
+        </div>
+        <div class="nav-item">
+            <i class="bi bi-search"></i>
+            <div>Search</div>
+        </div>
+        <div class="nav-item">
+            <i class="bi bi-bell"></i>
+            <div>Notifications</div>
+        </div>
+        <div class="nav-item">
+            <i class="bi bi-person"></i>
+            <div>Profile</div>
+        </div>
+    </div>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
