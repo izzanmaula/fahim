@@ -15,12 +15,17 @@ Aplikasi Fahim saat ini masih dalam tahap pengembangan (development) dan belum d
 
 ## Kontribusi
 
-Kami mengundang para pengembang (developer) untuk berkolaborasi dalam pengembangan aplikasi Fahim. Jika Anda tertarik untuk berkontribusi, silakan ikuti langkah-langkah berikut:
+Terima kasih sudah tertarik untuk berkunjung dalam pengembangan aplikasi Fahim. Jika Anda tertarik untuk berkontribusi, silakan ikuti langkah-langkah berikut:
 
-1.  **Fork repositori ini.**
-2.  **Buat branch baru untuk fitur atau perbaikan yang ingin Anda tambahkan.**
-3.  **Lakukan perubahan pada branch Anda.**
-4.  **Buat pull request (PR) ke branch `main` repositori ini.**
+> 📧 **Hubungi Saya**
+>
+> Sebelum memulai kontribusi dimohon dapat menghubungi saya melalui email izzanmaula@gmail.com atau instagram saya @fadhil.manfa. Kami sangat merhargai segala bentu kontribusi Anda.
+
+1.  Fork repositori ini.
+2.  Buat branch baru untuk fitur atau perbaikan yang ingin Anda tambahkan.
+3.  Lakukan perubahan pada branch Anda.
+4.  Buat pull request (PR) ke branch `main` repositori ini.
+5.  Menggunakan format commit yang jelas, contoh : git commot -m "menambahkan fitur geolokasi"
 
 ## Teknologi yang Digunakan
 
