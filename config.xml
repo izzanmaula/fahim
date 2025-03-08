@@ -9,3 +9,6 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 </widget>
+<platform name="android">
+     <preference name="AndroidAdaptiveIcon" value="false"/>
+</platform>
