@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.izzan.fahim" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Fahim</name>
-    <description>Sample Apache Cordova App</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+    <description>Fahim adalah aplikasi panduan Muslim lengkap yang dirancang untuk memudahkan kehidupan sehari-hari umat Islam.</description>
+    <author email="izzanmaula0@gmail.com" href="mailto:izzanmaula@gmail.com">
         Apache Cordova Team
     </author>
     <content src="index.html" />

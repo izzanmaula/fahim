@@ -1252,30 +1252,97 @@ function showStory(storyId) {
 });
 
 
-// FUNGSI UNTUK MEMUAT HALAMAN ///
-function loadPage(pageName) {
-    // Ubah status active pada menu
-    document.querySelectorAll('.nav-item').forEach(item => {
+// NAVBARR //
+function loadPage(page) {
+    if (page === 'home') {
+        window.location.href = 'index.html';
+    } else if (page === 'quran') {
+        window.location.href = 'quran.html';
+    } else if (page === 'doa') {
+        window.location.href = 'doa.html';
+    } else if (page === 'settings') {
+        window.location.href = 'settings.html';
+    }
+    
+    // Perbarui status aktif pada navbar
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
         item.classList.remove('active');
     });
-    document.querySelector(`.nav-item[onclick="loadPage('${pageName}')"]`).classList.add('active');
-
-    // Muat konten halaman
-    fetch(`pages/${pageName}.html`)
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('content-container').innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Error loading page:', error);
-            document.getElementById('content-container').innerHTML = '<p>Error loading page</p>';
-        });
+    
+    // Aktifkan item yang diklik
+    event.currentTarget.classList.add('active');
 }
 
-// Load halaman default saat aplikasi dimulai
-document.addEventListener('DOMContentLoaded', function () {
-    loadPage('home');
+// Tambahkan ini di script index.html (pada bagian event onload)
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded in index.html');
+    
+    // Setup tab event handlers
+    setupTabButtons();
+    
+    // Check if there's an active tab stored
+    const activeTab = localStorage.getItem('active_tab');
+    console.log('Active tab from localStorage:', activeTab);
+    
+    if (activeTab) {
+        // Click the appropriate tab
+        const tabLinks = document.querySelectorAll('.tab-link');
+        tabLinks.forEach(link => {
+            if (link.textContent.trim() === activeTab) {
+                console.log('Clicking tab:', activeTab);
+                link.click();
+            }
+        });
+        
+        // Clear the stored tab
+        localStorage.removeItem('active_tab');
+    } else {
+        // Default: load surah list
+        console.log('No active tab, loading surah list');
+        AlQuran.loadSurahList();
+    }
 });
+
+function setupTabButtons() {
+    const tabButtons = document.querySelectorAll('.tab-link');
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabName = this.textContent.trim();
+            console.log('Tab clicked:', tabName);
+            
+            // The openTab function will be called by the onclick attribute,
+            // but we also want to ensure the correct content is loaded
+            if (tabName === 'Bookmark') {
+                setTimeout(() => AlQuran.loadBookmarks(), 100);
+            } else if (tabName === 'Juz') {
+                setTimeout(() => AlQuran.loadJuzList(), 100);
+            } else if (tabName === 'Surah') {
+                setTimeout(() => AlQuran.loadSurahList(), 100);
+            }
+        });
+    });
+}
+
+function openTab(evt, tabName) {
+    console.log('Opening tab:', tabName);
+    
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        tabcontent[i].classList.remove("active");
+    }
+    tablinks = document.getElementsByClassName("tab-link");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.className += " active";
+}
+
+
 
 
 

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surah Detail</title>
+    <!-- Tambahkan CSS yang sama seperti file utama Anda -->
+    <style>
+        /* Copy CSS dari file utama */
+        
+        /* Additional styles for surah page */
+        .ayah {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .ayah-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .ayah-number {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #00a884;
+            color: white;
+            font-weight: bold;
+        }
+        .arabic-text {
+            text-align: right;
+            font-size: 24px;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+        .translation {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        .bookmark-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .bismillah {
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        /* NAVBARR */
+        .bottom-navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    padding: 10px 0;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 0;
+    width: 25%;
+    color: #8e8e93;
+  }
+  
+  .nav-item.active {
+    color: #00a884;
+  }
+  
+  .nav-item i {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+  
+  .nav-item span {
+    font-size: 12px;
+  }
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center;">
+                <a href="quran.html" style="background: none; border: none; cursor: pointer; margin-right: 10px;">
+                    <img src="img/back.png" alt="Back" style="width: 24px; height: 24px;">
+                </a>
+                <div style="width: 32px; height: 32px; background-color: #e7f8f3; border-radius: 20%; display: flex; justify-content: center; align-items: center; margin-right: 10px;">
+                    <img src="img/quran.png" alt="Quran Icon" style="width: 20px; height: 20px;">
+                </div>
+                <h1 id="surahTitle">Loading...</h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="surahDetail" class="tab-content active">
+        <div class="loading" style="padding: 20px; text-align: center;">
+            Loading surah...
+        </div>
+    </div>
+</div>
+
+<script src="js/al-quran.js"></script>
+<script>
+function goBack() {
+    console.log('Going back');
+    
+    // Check if we're in juz mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    
+    if (mode === 'juz') {
+        // Set juz tab as active via localStorage
+        localStorage.setItem('active_tab', 'Juz');
+    } else {
+        // Set surah tab as active
+        localStorage.setItem('active_tab', 'Surah');
+    }
+    
+    window.location.href = 'index.html';
+}
+
+    document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded in surah.html');
+    
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    
+    console.log('Mode:', mode);
+    
+    if (mode === 'juz') {
+        // Juz mode
+        const juzNumber = parseInt(urlParams.get('juzNumber'));
+        const surahNumber = parseInt(urlParams.get('surah'));
+        const ayahNumber = parseInt(urlParams.get('ayah'));
+        
+        console.log('Loading Juz view:', juzNumber, surahNumber, ayahNumber);
+        
+        if (juzNumber) {
+            AlQuran.loadJuzView(juzNumber, surahNumber, ayahNumber);
+        } else {
+            console.error('No juz number provided');
+            window.location.href = 'index.html';
+        }
+    } else {
+        // Regular surah mode
+        const surahNumber = localStorage.getItem('current_surah');
+        const ayahNumber = localStorage.getItem('current_ayah');
+        
+        console.log('Loading Surah view:', surahNumber, ayahNumber);
+        
+        if (surahNumber) {
+            loadSurahDetail(parseInt(surahNumber), ayahNumber ? parseInt(ayahNumber) : null);
+        } else {
+            console.error('No surah number provided');
+            window.location.href = 'index.html';
+        }
+    }
+});
+
+    function loadSurahDetail(surahNumber, ayahNumber = null) {
+        const surahDetail = document.getElementById('surahDetail');
+        
+        AlQuran.getSurahWithTranslation(surahNumber, 'id')
+            .then(surah => {
+                document.getElementById('surahTitle').textContent = surah.englishName;
+                
+                surahDetail.innerHTML = '';
+                
+                // Display Bismillah if not Surah At-Tawbah
+                if (surah.number !== 9) {
+                    const bismillah = document.createElement('div');
+                    bismillah.className = 'bismillah';
+                    bismillah.textContent = 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
+                    surahDetail.appendChild(bismillah);
+                }
+                
+                // Display ayahs
+                surah.ayahs.forEach((ayah, index) => {
+                    const ayahNumber = index + 1;
+                    const isBookmarked = AlQuran.isBookmarked(surah.number, ayahNumber);
+                    
+                    const ayahDiv = document.createElement('div');
+                    ayahDiv.className = 'ayah';
+                    ayahDiv.id = `ayah-${ayahNumber}`;
+                    ayahDiv.innerHTML = `
+                        <div class="ayah-header">
+                            <span class="ayah-number">${ayahNumber}</span>
+                            <button class="bookmark-btn" data-surah="${surah.number}" data-ayah="${ayahNumber}">
+                                <img src="img/${isBookmarked ? 'bookmark-filled.png' : 'bookmark.png'}" 
+                                     alt="Bookmark" style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+                        <div class="arabic-text">${ayah.text}</div>
+                        <div class="translation">${ayah.translation || ''}</div>
+                    `;
+                    
+                    // Add bookmark functionality
+                    const bookmarkBtn = ayahDiv.querySelector('.bookmark-btn');
+                    bookmarkBtn.addEventListener('click', function() {
+                        const surahNum = parseInt(this.getAttribute('data-surah'));
+                        const ayahNum = parseInt(this.getAttribute('data-ayah'));
+                        const imgElement = this.querySelector('img');
+                        
+                        if (AlQuran.isBookmarked(surahNum, ayahNum)) {
+                            AlQuran.removeBookmark(surahNum, ayahNum);
+                            imgElement.src = 'img/bookmark.png';
+                        } else {
+                            AlQuran.addBookmark(surahNum, ayahNum);
+                            imgElement.src = 'img/bookmark-filled.png';
+                        }
+                    });
+                    
+                    surahDetail.appendChild(ayahDiv);
+                });
+                
+                // Scroll to specific ayah if provided
+                if (ayahNumber) {
+                    const ayahElement = document.getElementById(`ayah-${ayahNumber}`);
+                    if (ayahElement) {
+                        setTimeout(() => {
+                            ayahElement.scrollIntoView({ behavior: 'smooth' });
+                            ayahElement.style.backgroundColor = '#f0f9f6';
+                            setTimeout(() => {
+                                ayahElement.style.backgroundColor = '';
+                            }, 2000);
+                        }, 100);
+                    }
+                }
+            })
+            .catch(error => {
+                surahDetail.innerHTML = `
+                    <div class="error" style="padding: 20px; text-align: center; color: #c00;">
+                        Error loading surah. Please check your internet connection.
+                    </div>
+                `;
+                console.error('Error loading surah:', error);
+            });
+    }
+</script>
+</body>
+</html>
