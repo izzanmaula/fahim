@@ -179,6 +179,50 @@
             font-weight: bold;
             color: #000;
         }
+
+        /* Download button and progress styles */
+        #downloadAllDataBtn {
+            position: fixed; 
+            bottom: 80px; 
+            right: 20px; 
+            background-color: #00a884; 
+            color: white; 
+            padding: 12px; 
+            border-radius: 50%; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+            z-index: 100;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #downloadProgress {
+            display: none; 
+            position: fixed; 
+            bottom: 70px; 
+            left: 0; 
+            right: 0; 
+            background-color: white; 
+            padding: 10px 20px; 
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1); 
+            z-index: 99;
+        }
+
+        .progress-container {
+            background-color: #f0f0f0; 
+            height: 10px; 
+            border-radius: 5px; 
+            margin-top: 5px;
+        }
+
+        #downloadProgressBar {
+            background-color: #00a884; 
+            height: 100%; 
+            width: 0%; 
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
     </style>
 
 </head>
@@ -189,10 +233,10 @@
         <div class="header">
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center;">
-                    <button onclick="goBack()"
-                        style="background: none; border: none; cursor: pointer; margin-right: 10px;">
+                    <a href="index.html" 
+                        style="text-decoration: none; display: inline-block; margin-right: 10px;">
                         <img src="img/back.png" alt="Back" style="width: 24px; height: 24px;">
-                    </button>
+                    </a>
                     <div
                         style="width: 32px; height: 32px; background-color: #e7f8f3; border-radius: 20%; display: flex; justify-content: center; align-items: center; margin-right: 10px;">
                         <img src="img/quran.png" alt="Quran Icon" style="width: 20px; height: 20px;">
@@ -254,6 +298,19 @@
         </div>
     </div>
 
+    <!-- Download Button -->
+    <div class="action-button" id="downloadAllDataBtn">
+        <img src="img/download.png" alt="Download" style="width: 24px; height: 24px;">
+    </div>
+
+    <!-- Download Progress Indicator -->
+    <div id="downloadProgress">
+        <div id="downloadProgressText">Downloading...</div>
+        <div class="progress-container">
+            <div id="downloadProgressBar"></div>
+        </div>
+    </div>
+
     <script src="js/al-quran.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/navbar.js"></script>
@@ -274,10 +331,43 @@
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.className += " active";
         }
+
+        // Download functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Setup download button
+            const downloadBtn = document.getElementById('downloadAllDataBtn');
+            const progressContainer = document.getElementById('downloadProgress');
+            const progressText = document.getElementById('downloadProgressText');
+            const progressBar = document.getElementById('downloadProgressBar');
+            
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    if (confirm('Download semua data Al-Quran untuk penggunaan offline?')) {
+                        // Show progress
+                        progressContainer.style.display = 'block';
+                        
+                        // Set progress callback
+                        AlQuran.setDownloadProgressCallback(function(data) {
+                            progressText.textContent = data.step;
+                            progressBar.style.width = `${data.progress}%`;
+                            
+                            if (data.progress === 100) {
+                                setTimeout(() => {
+                                    progressContainer.style.display = 'none';
+                                    alert('Download selesai! Aplikasi sekarang dapat digunakan secara offline.');
+                                }, 1000);
+                            }
+                        });
+                        
+                        // Start download
+                        AlQuran.downloadAllData();
+                    }
+                });
+            }
+        });
     </script>
 
     <!-- NAVBARR -->
-    <!-- NAVBARRR -->
     <div class="bottom-navbar fixed-bottom">
         <div class="nav-item active" onclick="loadPage('home')">
             <i class="bi bi-house"></i>

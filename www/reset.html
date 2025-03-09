@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quran App Reset</title>
+</head>
+<body>
+    <h1>Quran App Reset</h1>
+    <button id="resetBtn">Reset and Initialize App</button>
+    
+    <script>
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            // Define AlQuran if it doesn't exist
+            window.AlQuran = {
+                apiUrl: 'https://quran-api.santrikoding.com/api',
+                getAllSurahs: function() {
+                    return fetch(`${this.apiUrl}/surah`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const formattedData = data.map(surah => ({
+                                number: surah.nomor,
+                                name: surah.nama,
+                                englishName: surah.nama_latin,
+                                englishNameTranslation: surah.arti,
+                                numberOfAyahs: surah.jumlah_ayat,
+                                revelationType: surah.tempat_turun.toUpperCase(),
+                                description: surah.deskripsi,
+                                audio: surah.audio
+                            }));
+                            localStorage.setItem('quran_surahs', JSON.stringify(formattedData));
+                            return formattedData;
+                        });
+                }
+            };
+            
+            // Initialize the app
+            AlQuran.getAllSurahs()
+                .then(() => {
+                    alert('App initialized successfully! You can now return to the main app.');
+                })
+                .catch(error => {
+                    alert('Error initializing app: ' + error.message);
+                });
+        });
+    </script>
+</body>
+</html>

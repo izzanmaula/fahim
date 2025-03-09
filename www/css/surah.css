@@ -1,0 +1,44 @@
+
+.ayah {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.ayah-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.ayah-number {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #00a884;
+    color: white;
+    font-weight: bold;
+}
+.arabic-text {
+    text-align: right;
+    font-size: 24px;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+.translation {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+.bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.bismillah {
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+}
+
+
