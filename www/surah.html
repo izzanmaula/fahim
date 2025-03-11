@@ -116,11 +116,9 @@
 
         .ayah {
             background-color: var(--card-bg);
-            border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-        }
+        border: none;        }
 
         .bismillah {
             text-align: center;
@@ -166,7 +164,7 @@
                     <div>
                         <h1 id="surahTitle" style="font-family: 'Inter'; margin: 0; padding: 0; font-size: 1rem;">
                             Loading...</h1>
-                        <p id="surahDesc" style="font-size: 12px; color: grey; margin: 0; padding: 0;">Loading...</p>
+                        <p id="surahDesc" class="ayat-count" style="font-size: 12px; color: grey; margin: 0; padding: 0;">Loading...</p>
                     </div>
                     <div class="alert-container" style="position: relative; display: inline-block;"></div>
 
@@ -401,9 +399,8 @@
             AlQuran.getSurah(surahNumber)
                 .then(surah => {
                     // Update title and description
-                    document.getElementById('surahTitle').textContent = `${surah.englishName} (${surah.englishNameTranslation})`;
-                    document.getElementById('surahDesc').textContent = surah.description ?
-                        surah.description.replace(/<\/?[^>]+(>|$)/g, "") : `${surah.numberOfAyahs} Ayat`;
+                    document.getElementById('surahTitle').textContent = surah.englishName;
+                    document.getElementById('surahDesc').textContent = surah.englishNameTranslation;
 
                     // Clear container
                     surahDetail.innerHTML = '';
@@ -435,7 +432,6 @@
                         </button>
                     </div>
                     <div class="arabic-text">${ayah.text}</div>
-                    <div class="translation">${ayah.translation}</div>
                     <div class="translation-id">${ayah.translation}</div>
                 `;
 
@@ -526,6 +522,11 @@
         debugTranslations();
 
         function loadJuzView(juzNumber, startSurah, startAyah) {
+
+            // Update title and description for juz
+            document.getElementById('surahTitle').textContent = `Juz ${juzNumber}`;
+            document.getElementById('surahDesc').textContent = juzSurahMap[juzNumber] || 'Surah dalam juz ini';
+    
             const surahDetail = document.getElementById('surahDetail');
 
             // Show loading indicator
@@ -592,7 +593,6 @@
                             </button>
                         </div>
                         <div class="arabic-text">${ayah.text}</div>
-                        <div class="translation">${ayah.translation}</div>
                         <div class="translation-id">${ayah.translation}</div>
                     `;
 

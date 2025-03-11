@@ -9,6 +9,7 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 </widget>
+<preference name="AndroidPersistentFileLocation" value="Compatibility"/>
 <platform name="android">
      <preference name="AndroidAdaptiveIcon" value="false"/>
 </platform>
